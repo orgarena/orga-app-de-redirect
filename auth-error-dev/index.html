@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="de">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<title>ORGA App: Unbekannter Fehler</title>
+		<style>
+			:root {
+				--bg: #2f626d;
+				--text: #ffffff;
+				--muted: rgba(255, 255, 255, 0.8);
+				--border: rgba(255, 255, 255, 0.2);
+			}
+
+			* {
+				box-sizing: border-box;
+			}
+
+			body {
+				margin: 0;
+				min-height: 100vh;
+				background: var(--bg);
+				color: var(--text);
+				font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+				display: flex;
+				align-items: top;
+				justify-content: center;
+				text-align: center;
+				padding: 40px 24px;
+			}
+
+			.page {
+				width: 100%;
+				max-width: 960px;
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				gap: 28px;
+			}
+
+			.logo {
+				width: min(260px, 70vw);
+				height: auto;
+			}
+
+			h1 {
+				margin: 0 0 12px;
+				font-size: clamp(20px, 3vw, 28px);
+				letter-spacing: 0.2px;
+			}
+
+			p {
+				margin: 0;
+				font-size: clamp(16px, 2.4vw, 18px);
+				line-height: 1.6;
+				color: var(--muted);
+			}
+
+			.details {
+				width: 100%;
+				border: 1px solid var(--border);
+				border-radius: 12px;
+				padding: 20px 22px;
+				display: grid;
+				gap: 12px;
+			}
+
+			.detail-row {
+				display: grid;
+				gap: 6px;
+			}
+
+			.detail-label {
+				font-size: 12px;
+				text-transform: uppercase;
+				letter-spacing: 0.12em;
+				color: var(--muted);
+			}
+
+			.detail-value {
+				font-size: 16px;
+				line-height: 1.5;
+				word-break: break-word;
+			}
+		</style>
+	</head>
+	<body>
+		<main class="page" role="main">
+			<img
+				class="logo"
+				src="assets/ORGArena_GmbH_dunkel_boxed_DEV.svg"
+				alt="ORGArena GmbH"
+			/>
+			<section>
+				<h1>Ein Fehler ist aufgetreten</h1>
+				<p>
+					Beim Login ist ein Fehler aufgetreten. Bitte versuchen Sie
+					es erneut oder kontaktieren Sie den Support.
+				</p>
+			</section>
+			<section class="details" aria-live="polite">
+				<div class="detail-row">
+					<div class="detail-label">error</div>
+					<div class="detail-value" id="error-value">-</div>
+				</div>
+				<div class="detail-row">
+					<div class="detail-label">error_description</div>
+					<div class="detail-value" id="error-description-value">
+						-
+					</div>
+				</div>
+			</section>
+		</main>
+		<script>
+			const safeDecode = (value) => {
+				if (!value) {
+					return "";
+				}
+
+				try {
+					return decodeURIComponent(value.replace(/\+/g, " "));
+				} catch (error) {
+					return value;
+				}
+			};
+
+			const params = new URLSearchParams(window.location.search);
+			const errorValue = safeDecode(params.get("error"));
+			const descriptionValue = safeDecode(params.get("error_description"));
+
+			const errorTarget = document.getElementById("error-value");
+			const descriptionTarget = document.getElementById(
+				"error-description-value"
+			);
+
+			if (errorValue) {
+				errorTarget.textContent = errorValue;
+			}
+
+			if (descriptionValue) {
+				descriptionTarget.textContent = descriptionValue;
+			}
+		</script>
+	</body>
+</html>
