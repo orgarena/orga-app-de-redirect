@@ -120,8 +120,8 @@
 			/>
 			<section>
 				<h1>Ein Fehler ist aufgetreten</h1>
-				<p>
-					Beim Login ist ein Fehler aufgetreten. Bitte versuche es erneut oder kontaktiere den Support. Um wieder zur App zu gelangen, kannst du dieses Fenster einfach schließen (oben mit dem X), oder die App einmal schließen und neu öffnen.
+				<p id="error-message">
+					Beim Login ist ein Fehler aufgetreten. Bitte versuche es erneut oder kontaktiere den Support. Um wieder zur App zu gelangen, kannst du dieses Fenster einfach schließen (oben mit dem X oder Haken), oder die App einmal schließen und neu öffnen.
 				</p>
 			</section>
 			<section class="details" aria-live="polite">
@@ -149,6 +149,15 @@
 					return value;
 				}
 			};
+
+			const isDesktop = window.matchMedia('(hover: hover) and (pointer: fine)').matches && navigator.maxTouchPoints === 0;
+
+			// Fehlertext für Desktop entsprechend anpassen
+			const messageElement = document.getElementById('error-message');
+			if (isDesktop) {
+				// Im Browser anderen Hinweise anzeigen
+				messageElement.textContent = 'Beim Login ist ein Fehler aufgetreten. Bitte versuche es erneut oder kontaktiere den Support. Um wieder zur App zu gelangen, rufe die Desktop-App URL bitte erneut auf.';
+			}
 
 			const params = new URLSearchParams(window.location.search);
 			const errorValue = safeDecode(params.get("error"));
