@@ -151,12 +151,11 @@
 				}
 			};
 
-			// Capacitor-App-Erkennung
-			const isCapacitorApp = typeof window.Capacitor !== 'undefined';
+			const isDesktop = window.matchMedia('(hover: hover) and (pointer: fine)').matches && navigator.maxTouchPoints === 0;
 
-			// Fehlertext entsprechend anpassen
+			// Fehlertext für Desktop entsprechend anpassen
 			const messageElement = document.getElementById('error-message');
-			if (!isCapacitorApp) {
+			if (isDesktop) {
 				// Im Browser anderen Hinweise anzeigen
 				messageElement.textContent = 'Beim Login ist ein Fehler aufgetreten. Bitte versuche es erneut oder kontaktiere den Support. Um wieder zur App zu gelangen, rufe die Desktop-App URL bitte erneut auf.';
 			}
